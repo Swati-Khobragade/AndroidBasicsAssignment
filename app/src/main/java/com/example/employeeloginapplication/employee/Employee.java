@@ -9,18 +9,15 @@ public class Employee {
     private String empName;
     private int empAge;
     private String empDesignation;
-    private String empType;
+    private int empResId;
 
-    public Employee() {
-        super();
-    }
 
-    public Employee(String empName, int empAge, String empDesignation, String empType) {
+    public Employee(String empName, int empAge, String empDesignation, int empResId) {
         super();
         this.empName = empName;
         this.empAge = empAge;
         this.empDesignation = empDesignation;
-        this.empType = empType;
+        this.empResId = empResId;
     }
 
     public String getEmpName() {
@@ -47,12 +44,12 @@ public class Employee {
         this.empDesignation = empDesignation;
     }
 
-    public String getEmpType() {
-        return empType;
+    public int getEmpResId() {
+        return empResId;
     }
 
-    public void setEmpType(String empType) {
-        this.empType = empType;
+    public void setEmpResId(int empResId) {
+        this.empResId = empResId;
     }
 
     @Override
@@ -61,9 +58,8 @@ public class Employee {
         sb.append("empName='").append(empName).append('\'');
         sb.append(", empAge=").append(empAge);
         sb.append(", empDesignation='").append(empDesignation).append('\'');
-        sb.append(", empType='").append(empType).append('\'');
+        sb.append(", empResId=").append(empResId);
         sb.append('}');
         return sb.toString();
     }
-
 }

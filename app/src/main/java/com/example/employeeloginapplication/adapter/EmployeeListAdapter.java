@@ -16,23 +16,17 @@ import com.example.employeeloginapplication.employee.Employee;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends BaseAdapter {
+public class EmployeeListAdapter extends BaseAdapter {
     private ArrayList<Employee> empList;
-    private int[] empImgArray;
     private Context context;
-
-    public CustomAdapter() {
-    }
 
     /**
      * @param cont
      * @param employeeArrayList
-     * @param empImg
      */
-    public CustomAdapter(Context cont, ArrayList<Employee> employeeArrayList, int[] empImg) {
+    public EmployeeListAdapter(Context cont, ArrayList<Employee> employeeArrayList) {
         context = cont;
         empList = employeeArrayList;
-        empImgArray = empImg;
     }
 
     /**
@@ -42,7 +36,7 @@ public class CustomAdapter extends BaseAdapter {
      */
     @Override
     public int getCount() {
-        return empImgArray.length;
+        return empList.size();
     }
 
     /**
@@ -100,7 +94,7 @@ public class CustomAdapter extends BaseAdapter {
         empName.setText(empList.get(position).getEmpName());
         empDesg.setText(empList.get(position).getEmpDesignation());
         empAge.setText(String.valueOf(empList.get(position).getEmpAge()));
-        imageView.setImageResource(empImgArray[position]);
+        imageView.setImageResource(empList.get(position).getEmpResId());
         return (view);
     }
 }

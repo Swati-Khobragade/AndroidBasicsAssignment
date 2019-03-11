@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.employeeloginapplication.R;
 import com.example.employeeloginapplication.fragment.EmployeeListFragment;
@@ -37,7 +36,7 @@ public class EmployeeActivity extends AppCompatActivity {
      * Method to logout from application
      */
     private void logoutAction() {
-        startActivity(new Intent(EmployeeActivity.this, MainActivity.class));
+        startActivity(new Intent(EmployeeActivity.this, LoginActivity.class));
         finish();
     }
 

@@ -27,10 +27,7 @@ public class EmployeeDetailsFragment extends Fragment {
     int img = 0;
     private String name;
     private String desg;
-    private String age;
-
-    public EmployeeDetailsFragment() {
-    }
+    private int age = 0;
 
     /**
      * Use this factory method to create a new instance of
@@ -63,11 +60,11 @@ public class EmployeeDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         name = getArguments().getString("name");
-        age = getArguments().getString("age");
+        age = getArguments().getInt("age");
         desg = getArguments().getString("desg");
         img = getArguments().getInt("img");
         Log.d("name****", name);
-        Log.d("age****", age);
+        Log.d("age****", String.valueOf(age));
         Log.d("desg****", desg);
         Log.d("img****", String.valueOf(img));
 
@@ -87,7 +84,7 @@ public class EmployeeDetailsFragment extends Fragment {
         TextView empDesg = view.findViewById(R.id.tvEmpDesgValue);
         ImageView empImg = view.findViewById(R.id.imageView);
         empName.setText(name);
-        empAge.setText(age);
+        empAge.setText(String.valueOf(age));
         empDesg.setText(desg);
         empImg.setImageResource(img);
     }

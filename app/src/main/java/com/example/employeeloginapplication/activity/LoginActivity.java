@@ -6,8 +6,7 @@ package com.example.employeeloginapplication.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -16,14 +15,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.employeeloginapplication.R;
+import com.example.employeeloginapplication.constants.IConstants;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, IConstants {
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
     private Button mLoginButton;
     private String validUserName;
     private String validPassword;
-    public static final int TEXT_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +51,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mLoginButton.setOnClickListener(this);
     }
 
+    /**
+     * Method to Login into the Application
+     */
     private void login() {
         String username = mUsernameEditText.getText().toString().trim();
         String password = mPasswordEditText.getText().toString().trim();
@@ -80,37 +82,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * Method for Lunching Employee Activity
      */
     private void launchEmployeeActivity() {
-        Intent intent = new Intent(MainActivity.this, EmployeeActivity.class);
-        startActivityForResult(intent, TEXT_REQUEST);
+        Intent intent = new Intent(LoginActivity.this, EmployeeActivity.class);
+        startActivityForResult(intent, RESET_PASSWORD_REQUEST);
     }
 
     /**
      * Method for Lunching Reset Password Activity
      */
     private void launchResetPasswordActivity() {
-        Intent intent = new Intent(MainActivity.this, ResetPasswordActivity.class);
-        startActivityForResult(intent, TEXT_REQUEST);
+        Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+        startActivityForResult(intent, RESET_PASSWORD_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESET_PASSWORD_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                resetPassword(data);
+            }
+        }
     }
 
     /**
-     * @param requestCode
-     * @param resultCode
+     * Method to reset Password
+     *
      * @param data
      */
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == TEXT_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                String newPassword =
-                        data.getStringExtra("returnMsg");
-                Log.d("Return Msg::", newPassword);
-                showAlert("Password Reset Successfully !");
-                validPassword = newPassword;
-                mPasswordEditText.setText(newPassword);
-            }
-        }
+    private void resetPassword(Intent data) {
+        String newPassword =
+                data.getStringExtra(RETURN_MSG);
+        Log.d("Return Msg::", newPassword);
+        showAlert("Password Reset Successfully !");
+        validPassword = newPassword;
+        mPasswordEditText.setText(newPassword);
     }
 
     /**
@@ -122,16 +127,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     private boolean validateFields(String username, String password) {
         if (TextUtils.isEmpty(username)) {
-            mUsernameEditText.requestFocus();
-            mUsernameEditText.setError("Please enter Username");
+            setValidationMessage(mUsernameEditText, "Please enter Username");
             return false;
         }
         if (TextUtils.isEmpty(password)) {
-            mPasswordEditText.requestFocus();
-            mPasswordEditText.setError("Please enter Password");
+            setValidationMessage(mPasswordEditText, "Please enter Password");
             return false;
         }
         return true;
+    }
+
+    /**
+     * Method to set Focus & Error Message to Empty Edittext
+     * @param editText
+     * @param message
+     */
+    private void setValidationMessage(EditText editText, String message) {
+        editText.requestFocus();
+        editText.setError(message);
     }
 
     /**

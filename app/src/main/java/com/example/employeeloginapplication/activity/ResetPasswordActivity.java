@@ -15,8 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.employeeloginapplication.R;
+import com.example.employeeloginapplication.constants.IConstants;
 
-public class ResetPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class ResetPasswordActivity extends AppCompatActivity implements View.OnClickListener, IConstants {
     private EditText mNewPasswordEditText;
     private EditText mConfirmPasswordEditText;
     private Button mSubmitButton;
@@ -68,7 +69,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
         String confirmPassword = mConfirmPasswordEditText.getText().toString().trim();
         if (validateFields(newPassword, confirmPassword)) {
             Intent replyIntent = new Intent();
-            replyIntent.putExtra("returnMsg", confirmPassword);
+            replyIntent.putExtra(RETURN_MSG, confirmPassword);
             setResult(RESULT_OK, replyIntent);
             finish();
         }
@@ -83,20 +84,27 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
      */
     private boolean validateFields(String newPassword, String confirmPassword) {
         if (TextUtils.isEmpty(newPassword)) {
-            mNewPasswordEditText.requestFocus();
-            mNewPasswordEditText.setError("Please enter New Password");
+            setValidationMessage(mNewPasswordEditText, "Please enter New Password");
             return false;
         }
         if (TextUtils.isEmpty(confirmPassword)) {
-            mConfirmPasswordEditText.requestFocus();
-            mConfirmPasswordEditText.setError("Please Confirm Password");
+            setValidationMessage(mConfirmPasswordEditText, "Please Confirm Password");
             return false;
         }
         if (!TextUtils.equals(newPassword, confirmPassword)) {
-            mConfirmPasswordEditText.requestFocus();
-            mConfirmPasswordEditText.setError("Password does not match");
+            setValidationMessage(mConfirmPasswordEditText, "Password does not match");
             return false;
         }
         return true;
+    }
+
+    /**
+     * Method to set Focus & Error Message to Empty Edittext
+     * @param editText
+     * @param message
+     */
+    private void setValidationMessage(EditText editText, String message) {
+        editText.requestFocus();
+        editText.setError(message);
     }
 }

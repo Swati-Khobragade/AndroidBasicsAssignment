@@ -14,10 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.employeeloginapplication.R;
-import com.example.employeeloginapplication.adapter.CustomAdapter;
+import com.example.employeeloginapplication.adapter.EmployeeListAdapter;
 import com.example.employeeloginapplication.employee.Employee;
 import com.example.employeeloginapplication.employee.EmployeeDataHandler;
 
@@ -25,7 +24,9 @@ import java.util.ArrayList;
 
 public class EmployeeListFragment extends Fragment implements AdapterView.OnItemClickListener {
     private ListView empListView;
-    int[] empImageArray = {R.drawable.img1, R.drawable.img7, R.drawable.img8, R.drawable.img4, R.drawable.img5, R.drawable.img2, R.drawable.img3, R.drawable.img8};
+    private EmployeeListAdapter employeeListAdapter;
+    ArrayList<Employee> empData;
+    View view;
 
     /**
      * @param inflater
@@ -36,12 +37,29 @@ public class EmployeeListFragment extends Fragment implements AdapterView.OnItem
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ArrayList<Employee> empData = EmployeeDataHandler.getEmpData();
-        Log.d("Employee Data::", empData.toString());
-        View view = inflater.inflate(R.layout.employee_list_fragment_layout, container, false);
-        empListView = view.findViewById(R.id.employeeListview);
-        empListView.setAdapter(new CustomAdapter(getActivity(), empData, empImageArray));
+        view = inflater.inflate(R.layout.employee_list_fragment_layout, container, false);
+        initViews();
+        setAdapter();
         return view;
+    }
+
+    /**
+     * Initialize the Views
+     */
+    private void initViews() {
+        empListView = view.findViewById(R.id.employeeListview);
+    }
+
+    /**
+     * Set Adapter to Listview
+     */
+    private void setAdapter() {
+        empData = EmployeeDataHandler.getEmpData();
+        Log.d("Employee Data::", empData.toString());
+        if (employeeListAdapter == null) {
+            employeeListAdapter = new EmployeeListAdapter(getActivity(), empData);
+        }
+        empListView.setAdapter(employeeListAdapter);
     }
 
     /**
@@ -69,38 +87,21 @@ public class EmployeeListFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d("Position", String.valueOf(position));
-        TextView name = view.findViewById(R.id.tvEmpName);
-        TextView desg = view.findViewById(R.id.tvEmpDesignation);
-        TextView age = view.findViewById(R.id.tvEmpAge);
-        String empName = name.getText().toString().trim();
-        String empDesg = desg.getText().toString().trim();
-        String empAge = age.getText().toString().trim();
-        int empImg = empImageArray[position];
-
-        Log.v("name", empName);
-        Log.v("desg", empDesg);
-        Log.v("age", empAge);
-        Log.v("img", String.valueOf(empImg));
-        launchEmployeeDetailsFragment(empName, empDesg, empAge, empImg);
+        launchEmployeeDetailsFragment(empData.get(position));
     }
 
     /**
-     * Method to launch Employee Details Fragment
-     *
-     * @param empName
-     * @param empDesg
-     * @param empAge
-     * @param empImg
+     * @param employee
      */
-    private void launchEmployeeDetailsFragment(String empName, String empDesg, String empAge, int empImg) {
+    private void launchEmployeeDetailsFragment(Employee employee) {
         EmployeeDetailsFragment empDetailsFragment = EmployeeDetailsFragment.newInstance();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.mainFrame, empDetailsFragment);
         Bundle args = new Bundle();
-        args.putString("name", empName);
-        args.putString("age", empAge);
-        args.putString("desg", empDesg);
-        args.putInt("img", empImg);
+        args.putString("name", employee.getEmpName());
+        args.putInt("age", employee.getEmpAge());
+        args.putString("desg", employee.getEmpDesignation());
+        args.putInt("img", employee.getEmpResId());
         empDetailsFragment.setArguments(args);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack(null);
