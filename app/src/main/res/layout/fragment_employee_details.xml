@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ScreenColor"
+    android:padding="10dp"
+    tools:context=".fragment.EmployeeDetailsFragment">
+
+    android:padding="20dp">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/tvEmpDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/employeeDetails"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmpDetails"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvEmpNameDet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:text="@string/empName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEmpNameValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvEmpDesgValue"
+        android:layout_alignTop="@+id/tvEmpNameDet"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/tvEmpNameDet"
+        android:text="@string/employeeDetails"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tvEmpAgeDet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvEmpAgeValue"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/tvEmpAgeValue"
+        android:text="@string/empAge"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEmpAgeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmpNameValue"
+        android:layout_alignLeft="@+id/tvEmpDesgValue"
+        android:text="@string/userName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tvEmpDesgDet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmpAgeDet"
+        android:text="@string/empDesg"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEmpDesgValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvEmpDesgDet"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/tvEmpDesgDet"
+        android:text="@string/employeeDetails"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/white" />
+
+
+</RelativeLayout>
